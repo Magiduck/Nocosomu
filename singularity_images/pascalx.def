@@ -1,0 +1,21 @@
+BootStrap: localimage
+From: ubuntuPython_core.sif
+
+%post
+    git clone https://github.com/curzuat/PascalX.git
+    mkdir -p /PascalX/build/lib
+    echo "/PascalX/build/lib" > /etc/ld.so.conf.d/pascalx.conf
+    cd PascalX
+    make all && ldconfig && make test
+    cd python
+    pip install -e .
+    pip install joblib
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author Carlos Urzua
+

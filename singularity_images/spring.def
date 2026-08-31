@@ -1,0 +1,12 @@
+BootStrap: docker
+From: continuumio/miniconda3
+
+%environment
+    export LC_ALL=en_US.utf-8
+    export LANG=en_US.utf-8
+
+%post
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda install spring

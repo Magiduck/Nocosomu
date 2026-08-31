@@ -1,0 +1,12 @@
+BootStrap: docker
+From: ncbi/sra-tools:latest
+
+%post
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author CGUT

@@ -1,0 +1,19 @@
+BootStrap: docker
+From: continuumio/miniconda3
+
+%post
+    umask 002
+    apt-get -y update
+    apt-get -y install git
+    apt-get -y install bedtools wget pkg-config libfontconfig1-dev
+    pip install --upgrade pip
+
+    git clone https://github.com/carjed/helmsman.git
+    cd helmsman
+    pip install -r pip_reqs.txt
+
+%environment
+    export LC_ALL=C
+
+%runscript
+

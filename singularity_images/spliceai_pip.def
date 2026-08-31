@@ -1,0 +1,17 @@
+BootStrap: docker
+From: tensorflow/tensorflow:2.12.0-gpu
+
+%post
+    apt-get -y update
+    apt-get -y install git
+    apt-get -y install bedtools
+    pip install --upgrade pip
+  
+    pip install spliceai
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+

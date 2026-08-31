@@ -1,0 +1,31 @@
+BootStrap: docker
+From: tensorflow/tensorflow:2.12.0-gpu
+
+%post
+    apt-get -y update
+    apt-get -y install git 
+    apt-get -y install bedtools
+    pip install --upgrade pip
+
+    git clone https://github.com/calico/baskerville.git
+    cd baskerville
+    pip install -e .
+    git reset --hard 08baca9051b23146518ce8c3a6579893979f38f1
+    git clean -df
+    cd ..
+
+    git clone https://github.com/calico/borzoi.git
+    cd borzoi
+    pip install -e .
+    cd ..
+
+    pip install pyfaidx
+    pip install tables
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author Tijs van Lieshout

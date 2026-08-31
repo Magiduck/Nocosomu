@@ -1,0 +1,48 @@
+BootStrap: docker
+From: tensorflow/tensorflow:2.15.0-gpu
+
+%post
+    apt-get -y update
+    apt-get -y install git
+    apt-get -y install bedtools
+    pip install --upgrade pip
+    pip install setuptools wheel cython
+
+    pip install --no-build-isolation pybedtools~=0.10.0
+
+    git clone https://github.com/calico/baskerville.git
+    cd baskerville
+#   git reset --hard 08baca9051b23146518ce8c3a6579893979f38f1
+#   git clean -df
+    cd ..
+
+    git clone https://github.com/calico/borzoi.git
+
+#   conda create -n borzoi_py310 python=3.10
+
+    pip install torch==2.2.2 --index-url https://download.pytorch.org/whl/cu121
+    pip install "transformers<4.49.0" "enformer-pytorch<=0.8.10"
+
+    pip install -e ./baskerville -e ./borzoi "numpy<2.0.0" "scikit-learn<1.5.0" "tensorflow==2.15.0"
+    
+    pip install pyfaidx tables pandas pyarrow scipy duckdb==0.6.1 openpyxl psutil pickleshare pysam biopython matplotlib einops tqdm seaborn logomaker liftover natsort "numpy<2.0.0" "scikit-learn<1.5.0" "tensorflow==2.15.0"
+
+    mkdir transformers
+    python3 -c "from enformer_pytorch import Enformer; enformer = Enformer.from_pretrained('EleutherAI/enformer-official-rough', cache_dir = '/transformers')"
+
+%environment
+    export LC_ALL=C
+    export BORZOI_DIR=/borzoi
+    export PATH=$BORZOI_DIR/src/scripts:$PATH
+    export PYTHONPATH=$BORZOI_DIR/src/scripts:$PYTHONPATH
+
+    export BASKERVILLE_DIR=//baskerville
+    export PATH=$BASKERVILLE_DIR/src/baskerville/scripts:$PATH
+    export PYTHONPATH=$BASKERVILLE_DIR/src/baskerville/scripts:$PYTHONPATH
+
+#   export BORZOI_CONDA=/anaconda3/etc/profile.d/conda.sh
+    export BORZOI_HG38=$BORZOI_DIR/examples/hg38
+    export BORZOI_MM10=$BORZOI_DIR/examples/mm10
+#   export BASKERVILLE_CONDA=$BORZOI_CONDA
+
+%runscript

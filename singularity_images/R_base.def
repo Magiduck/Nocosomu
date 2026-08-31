@@ -1,0 +1,26 @@
+BootStrap: docker
+From: r-base:latest
+
+%post
+    R --slave -e 'install.packages("data.table",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("magrittr",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("glue",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("stringr",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("splitstackshape",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("ggplot2",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("tidyr",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("readxl",repos="https://cran.rstudio.com/")'
+    apt-get -y update
+    apt-get -y install libcurl4-openssl-dev libssl-dev
+    R --slave -e 'Sys.setenv("NOT_CRAN" = TRUE); install.packages("arrow",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("duckdb",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("R.utils",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("gmp",repos="https://cran.rstudio.com/")'
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author Carlos Urzua

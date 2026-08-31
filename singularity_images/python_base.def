@@ -1,0 +1,18 @@
+BootStrap: localimage
+From: ubuntuPython_core.sif
+
+%post
+    pip install pandas pyarrow
+    pip install scipy numpy
+    pip install scikit-learn
+    pip install duckdb==0.6.1
+    pip install openpyxl
+    pip install psutil
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author Carlos Urzua

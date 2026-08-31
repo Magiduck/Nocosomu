@@ -1,0 +1,38 @@
+BootStrap: docker
+From: tensorflow/tensorflow:2.12.0-gpu
+
+
+%post
+    umask 002
+    apt-get -y update
+    apt-get -y install git
+    apt-get -y install bedtools wget
+    pip install --upgrade pip
+
+    git clone https://github.com/jzhoulab/puffin.git
+    cd puffin
+    sed -i "1s|^|#!/usr/bin/env python3 \n|" puffin.py
+    sed -i "1s|^|#!/usr/bin/env python3 \n|" puffin_D.py
+    pip install -r requirements.txt
+
+    wget https://zenodo.org/record/7941729/files/puffin_D.pth
+    mv puffin_D.pth ./resources
+
+    wget https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+    mv  hg38.fa.gz ./resources
+    cd ./resources
+    gzip -d hg38.fa.gz
+    cd ../
+    
+    chmod -R ug+rwx .
+    python puffin.py coord chr7:5529775-5531425-
+    python puffin_D.py coord chr7:5530600-
+
+#apptainer exec puffin_resources.sif /puffin/puffin.py coord chr7:5529775-5531425-
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+

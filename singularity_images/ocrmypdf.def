@@ -1,0 +1,12 @@
+BootStrap: docker
+From: jbarlow83/ocrmypdf-alpine
+
+%post
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author CGUT

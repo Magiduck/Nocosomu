@@ -1,0 +1,32 @@
+BootStrap: localimage
+From: single-cell-container-server.simg 
+
+%apprun rserver
+    exec rserver "${@}"
+
+%runscript
+    source /apps/modules/modules.bashrc
+    exec rserver "${@}"
+
+%environment
+    export PATH=/usr/lib/rstudio-server/bin:${PATH}
+
+%post
+    R --slave -e 'install.packages("stringr",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("splitstackshape",repos="https://cran.rstudio.com/")'
+    apt-get -y update
+    apt-get -y install libcurl4-openssl-dev libssl-dev
+    R --slave -e 'Sys.setenv("NOT_CRAN" = TRUE); install.packages("arrow",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("duckdb",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("ggrepel",repos="https://cran.rstudio.com/")'
+    R --slave -e 'install.packages("R.utils",repos="https://cran.rstudio.com/")'
+    apt-get -y install libgmp3-dev
+    R --slave -e 'install.packages("gmp",repos="https://cran.rstudio.com/")'
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author Carlos Urzua

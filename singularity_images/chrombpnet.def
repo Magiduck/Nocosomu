@@ -1,0 +1,12 @@
+BootStrap: docker
+From: kundajelab/chrombpnet:latest
+
+%post
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author CGUT

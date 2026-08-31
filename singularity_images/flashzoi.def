@@ -1,0 +1,43 @@
+BootStrap: docker
+From: tensorflow/tensorflow:2.12.0-gpu
+
+%post
+    apt-get -y update
+    apt-get -y install git
+    apt-get -y install bedtools
+    pip install --upgrade pip
+
+    pip install pyfaidx
+    pip install tables
+
+    pip install pandas pyarrow
+    pip install scipy numpy
+    pip install scikit-learn
+    pip install duckdb==0.6.1
+    pip install openpyxl
+    pip install psutil
+    pip install pickleshare
+    pip install pysam
+    pip install biopython
+    pip install matplotlib
+    pip install einops
+    pip install tqdm
+    pip install torch
+    pip install seaborn
+    pip install logomaker
+
+    pip install liftover
+    pip install natsort
+
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    pip install packaging
+    pip install ninja
+    pip install flash-attn --no-build-isolation
+    pip install borzoi-pytorch
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+

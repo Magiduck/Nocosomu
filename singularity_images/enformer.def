@@ -1,0 +1,17 @@
+BootStrap: localimage
+From: python_base.sif
+
+%post
+    pip3 install enformer-pytorch>=0.5
+    pip3 install pickleshare
+    pip3 install pysam
+    mkdir transformers
+    python3 -c "from enformer_pytorch import Enformer; enformer = Enformer.from_pretrained('EleutherAI/enformer-official-rough', cache_dir = '/transformers')"
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author Carlos Urzua

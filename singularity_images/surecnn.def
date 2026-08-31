@@ -1,0 +1,26 @@
+BootStrap: localimage
+From: ubuntuPython_core.sif
+
+%post
+    pip3 install torch==1.12.1
+    pip3 install pickleshare==0.7.5 
+    pip3 install pandas==1.5.2
+    pip3 install numpy==1.22.4
+    pip3 install pysam==0.17.0
+    pip install duckdb==0.6.1
+    pip install pyarrow
+    pip install biopython
+    pip install matplotlib
+    pip install einops
+    pip install tqdm
+    pip install psutil
+
+
+%environment
+    export LC_ALL=C
+
+%runscript
+
+%labels
+    Author Carlos Urzua
+

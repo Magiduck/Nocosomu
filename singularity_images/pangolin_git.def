@@ -1,0 +1,18 @@
+BootStrap: docker
+From: tensorflow/tensorflow:2.12.0-gpu
+
+%environment
+    export LC_ALL=C
+    source /opt/etc/bashrc
+
+%post
+    apt-get -y update
+    apt-get -y install git
+    apt-get -y install libbz2-dev liblzma-dev
+    pip install torch gffutils biopython pandas pyfastx pyvcf3
+
+    git clone https://github.com/tkzeng/Pangolin.git
+    cd Pangolin
+    pip install .
+
+%runscript
